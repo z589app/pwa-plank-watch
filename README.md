@@ -28,5 +28,5 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 
 # memo.
-- [LocalForage $B$r;H$C$F%"%W%jFb(B DB $B$r4JC19=C[(B - Corredor](http://neos21.hatenablog.com/entry/2017/11/01/080000)
-- [Canvas $B$H(B requestAnimationFrame $B$G%"%K%a!<%7%g%s(B - Qiita](https://qiita.com/hoo-chan/items/398cfc8514c0f1cd984d)
+- [LocalForage を使ってアプリ内 DB を簡単構築 - Corredor](http://neos21.hatenablog.com/entry/2017/11/01/080000)
+- [Canvas と requestAnimationFrame でアニメーション - Qiita](https://qiita.com/hoo-chan/items/398cfc8514c0f1cd984d)
