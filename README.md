@@ -25,11 +25,8 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-<<<<<<< HEAD
-=======
 
 
 # memo.
 - [LocalForage を使ってアプリ内 DB を簡単構築 - Corredor](http://neos21.hatenablog.com/entry/2017/11/01/080000)
 - [Canvas と requestAnimationFrame でアニメーション - Qiita](https://qiita.com/hoo-chan/items/398cfc8514c0f1cd984d)
->>>>>>> add_arc
