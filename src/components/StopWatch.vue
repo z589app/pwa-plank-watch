@@ -24,6 +24,10 @@
         </tr>
       </table>
       <button class="ui basic button" @click="addItem">+</button>
+      <br>
+      <button class="ui basic button" @click="saveMenu">SAVE</button>
+      <button class="ui basic button" @click="loadMenu">LOAD</button>
+      <button class="ui basic button" @click="loadDefaultMenu">DEFAULT</button>
       <ul class="ui bulleted list" v-if="times.length">
         <li class="item" v-for="itm in times" v-bind:key="itm">
           {{ itm.hours  }} :
@@ -43,6 +47,8 @@
 </css>
 
 <script>
+import * as localforage from 'localforage'
+
 export default {
   name: 'StopWatch',
   data () {
@@ -54,17 +60,11 @@ export default {
       startTime: 0,
       isRunning: false,
       durationTime: 0,
-      menu: [
-        {name: 'フルプランク', sec: 60},
-        {name: 'エルボープランク', sec: 30},
-        {name: '脚上げプランク右', sec: 30},
-        {name: '脚上げプランク左', sec: 30},
-        {name: 'レフトサイドプランク', sec: 30},
-        {name: 'ライトサイドプランク', sec: 30},
-        {name: 'フルプランク', sec: 30},
-        {name: 'エルボープランク', sec: 60}
-      ]
+      menu: []
     }
+  },
+  created: function () {
+    this.loadMenu()
   },
   methods: {
     // 現在時刻から引数に渡した数値を startTime に代入
@@ -114,8 +114,52 @@ export default {
       this.menu.push({name: itemName, sec: 10})
     },
     removeItem: function (idx) {
-      console.log(idx)
       this.menu.splice(idx, 1)
+    },
+    loadDefaultMenu: function () {
+      this.menu = [
+        {name: 'フルプランク', sec: 60},
+        {name: 'エルボープランク', sec: 30},
+        {name: '脚上げプランク右', sec: 30},
+        {name: '脚上げプランク左', sec: 30},
+        {name: 'レフトサイドプランク', sec: 30},
+        {name: 'ライトサイドプランク', sec: 30},
+        {name: 'フルプランク', sec: 30},
+        {name: 'エルボープランク', sec: 60}
+      ]
+    },
+    saveMenu: function () {
+      const myLF = localforage.createInstance({
+        drive: localforage.LOCALSTORAGE,
+        name: 'MyLocal',
+        storeName: 'pwa-plank-watch',
+        version: 1
+      })
+      myLF.setItem('item', this.menu)
+        .then(() => {
+          // pass
+        })
+        .catch((error) => {
+          console.log(error) // pass
+        })
+    },
+    loadMenu: function () {
+      const myLF = localforage.createInstance({
+        drive: localforage.LOCALSTORAGE,
+        name: 'MyLocal',
+        storeName: 'pwa-plank-watch',
+        version: 1
+      })
+      myLF.getItem('item')
+        .then((value) => {
+          if (value) {
+            this.menu = value
+          }
+        })
+        .catch((error) => {
+          this.loadDefaultMenu()
+          console.log(error)
+        })
     }
   },
   computed: {
