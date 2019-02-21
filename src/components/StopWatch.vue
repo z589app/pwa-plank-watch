@@ -154,10 +154,11 @@ export default {
         .then((value) => {
           if (value) {
             this.menu = value
+          } else {
+            this.loadDefaultMenu()
           }
         })
         .catch((error) => {
-          this.loadDefaultMenu()
           console.log(error)
         })
     }
