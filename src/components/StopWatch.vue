@@ -15,11 +15,13 @@
       <button class="ui button" @click="pushTime" :disabled="!isRunning">LAP</button>
       <button class="ui basic button" @click="clearAll">CLEAR</button>
         <table>
-        <tr class="mn" v-for="mn in menu" v-bind:key="mn">
-          <tl>{{ mn.name  }} :</tl>
-          <tl>{{ mn.sec  }}</tl>
+        <tr class="mn" v-for="(mn, index) in menu" v-bind:key="mn">
+          <tl><input :disabled="isRunning' placeholder='Name'>{{ mn.name  }} :</input></tl>
+          <tl><input :disabled="isRunning' placeholder='integer seconds'>{{ mn.sec  }}</input></tl>
+          <tl><button class="ui basic button" @click="removeItem(index)">-</button></tl>
         </tr>
         <table>
+      <button class="ui basic button" @click="addItem">+</button>
       <ul class="ui bulleted list" v-if="times.length">
         <li class="item" v-for="itm in times" v-bind:key="itm">
           {{ itm.hours  }} :
@@ -99,6 +101,12 @@ export default {
       this.times = []
       this.stopTimer()
       this.animateFrame = 0
+    },
+    addItem: function () {
+      this.menu.push({name: '', sec: 10})
+    },
+    removeItem: function (idx) {
+      this.menu.splice(idx, idx)
     }
   },
   computed: {
