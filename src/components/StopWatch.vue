@@ -14,10 +14,12 @@
       <button class="ui secondary button" @click="stopTimer" v-else>STOP</button>
       <button class="ui button" @click="pushTime" :disabled="!isRunning">LAP</button>
       <button class="ui basic button" @click="clearAll">CLEAR</button>
-        <li class="mn" v-for="mn in menu" v-bind:key="mn">
-          {{ mn.name  }} :
-          {{ mn.sec  }}
-        </li>
+        <table>
+        <tr class="mn" v-for="mn in menu" v-bind:key="mn">
+          <tl>{{ mn.name  }} :</tl>
+          <tl>{{ mn.sec  }}</tl>
+        </tr>
+        <table>
       <ul class="ui bulleted list" v-if="times.length">
         <li class="item" v-for="itm in times" v-bind:key="itm">
           {{ itm.hours  }} :
