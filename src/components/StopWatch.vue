@@ -2,9 +2,11 @@
 <div id="app" class="ui text container">
   <div class="center aligned row">
     <div class="column">
-      <h1>
+      <h2>
         {{ msg }}
-      </h1>
+        <br>
+        {{ duration }}
+      </h2>
       <p>
         {{ hours }} :
         {{ minutes | zeroPad }} :
@@ -14,10 +16,14 @@
       <button class="ui secondary button" @click="stopTimer" v-else>STOP</button>
       <button class="ui button" @click="pushTime" :disabled="!isRunning">LAP</button>
       <button class="ui basic button" @click="clearAll">CLEAR</button>
-        <li class="mn" v-for="mn in menu" v-bind:key="mn">
-          {{ mn.name  }} :
-          {{ mn.sec  }}
-        </li>
+      <table align=center>
+        <tr class="mn" v-for="(mn, index) in menu" v-bind:key="index">
+          <th><input laceholder='Name' v-model=mn.name></th>
+          <th><input laceholder='integer seconds' v-model=mn.sec></th>
+          <th><button class="ui basic button" @click="removeItem(index)">-</button></th>
+        </tr>
+      </table>
+      <button class="ui basic button" @click="addItem">+</button>
       <ul class="ui bulleted list" v-if="times.length">
         <li class="item" v-for="itm in times" v-bind:key="itm">
           {{ itm.hours  }} :
@@ -33,6 +39,9 @@
 </div>
 </template>
 
+<css>
+</css>
+
 <script>
 export default {
   name: 'StopWatch',
@@ -44,6 +53,7 @@ export default {
       diffTime: 0,
       startTime: 0,
       isRunning: false,
+      durationTime: 0,
       menu: [
         {name: 'フルプランク', sec: 60},
         {name: 'エルボープランク', sec: 30},
@@ -97,23 +107,36 @@ export default {
       this.times = []
       this.stopTimer()
       this.animateFrame = 0
+      this.durationTime = 0
+    },
+    addItem: function () {
+      var itemName = 'N' + this.menu.length.toString()
+      this.menu.push({name: itemName, sec: 10})
+    },
+    removeItem: function (idx) {
+      console.log(idx)
+      this.menu.splice(idx, 1)
     }
   },
   computed: {
     msg: function () {
-      var tSec = this.diffTime / 1000
+      var tSec = Math.ceil(this.diffTime / 1000)
       var message = 'おつかれ～'
       var menu = this.menu
       for (var i = 0; i < menu.length; i++) {
         var item = menu[i]
         if (tSec <= item.sec) {
           message = item.name
+          this.durationTime = item.sec - tSec
           break
         } else {
           tSec -= item.sec
         }
       }
       return message
+    },
+    duration: function () {
+      return this.durationTime
     },
     // 時間を計算
     hours: function () {
