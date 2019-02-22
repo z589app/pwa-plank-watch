@@ -12,24 +12,24 @@
         {{ minutes | zeroPad }} :
         {{ seconds | zeroPad }} :
         {{ milliSeconds | zeroPad(3) }}</p>
-      <button class="ui secondary button" @click="startTimer" v-if="!isRunning">START</button>
-      <button class="ui secondary button" @click="stopTimer" v-else>STOP</button>
-      <button class="ui button" @click="pushTime" :disabled="!isRunning">LAP</button>
-      <button class="ui basic button" @click="clearAll">CLEAR</button>
+      <button class="btn-square" @click="startTimer" v-if="!isRunning">START</button>
+      <button class="btn-square" @click="stopTimer" v-else>STOP</button>
+      <button class="btn-square" @click="pushTime" :disabled="!isRunning">LAP</button>
+      <button class="btn-square" @click="clearAll">CLEAR</button>
       <table align=center>
         <tr class="mn" v-for="(mn, index) in menu" v-bind:key="index">
-          <th><input laceholder='Name' v-model=mn.name></th>
-          <th><input laceholder='integer seconds' v-model=mn.sec></th>
-          <th><button class="ui basic button" @click="removeItem(index)">-</button></th>
+          <th><input type="text" class="menu-name" placeholder='Name' v-model=mn.name></th>
+          <th><input type="number" class="menu-sec" placeholder='integer seconds' v-model=mn.sec></th>
+          <th><button class="btn-square" @click="removeItem(index)">X</button></th>
         </tr>
       </table>
-      <button class="ui basic button" @click="addItem">+</button>
+      <button class="btn-square" @click="addItem">+</button>
       <br>
-      <button class="ui basic button" @click="saveMenu">SAVE</button>
-      <button class="ui basic button" @click="loadMenu">LOAD</button>
-      <button class="ui basic button" @click="loadDefaultMenu">DEFAULT</button>
-      <ul class="ui bulleted list" v-if="times.length">
-        <li class="item" v-for="itm in times" v-bind:key="itm">
+      <button class="btn-square" @click="saveMenu">SAVE</button>
+      <button class="btn-square" @click="loadMenu">LOAD</button>
+      <button class="btn-square" @click="loadDefaultMenu">DEFAULT</button>
+      <ul v-if="times.length">
+        <li v-for="itm in times" v-bind:key="itm">
           {{ itm.hours  }} :
           {{ itm.minutes | zeroPad }} :
           {{ itm.seconds | zeroPad }} :
@@ -43,8 +43,25 @@
 </div>
 </template>
 
-<css>
-</css>
+<style>
+.menu-name {width: 20em; }
+.menu-sec {width: 8em; }
+.btn-square {
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #668ad8;/*ボタン色*/
+  color: #FFF;
+  border-bottom: solid 4px #627295;
+  border-radius: 3px;
+}
+.btn-square:active {
+  /*ボタンを押したとき*/
+  -webkit-transform: translateY(4px);
+  transform: translateY(4px);/*下に動く*/
+  border-bottom: none;/*線を消す*/
+}
+</style>
 
 <script>
 import * as localforage from 'localforage'
