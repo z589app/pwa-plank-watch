@@ -34,7 +34,7 @@ main {
 
 header {
   margin: 0;
-  height: 56px;
+  height: 24px;
   padding: 0 16px 0 24px;
   background-color: #35495E;
   color: #ffffff;
@@ -48,6 +48,6 @@ header span {
   letter-spacing: .02em;
   font-weight: 400;
   box-sizing: border-box;
-  padding-top: 16px;
+  padding-top: 1px;
 }
 </style>
