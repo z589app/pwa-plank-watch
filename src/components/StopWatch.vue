@@ -1,6 +1,6 @@
 <template>
 <div id="app" class="ui text container">
-  <div class="center aligned row">
+  <div class="center aligned">
     <div class="column">
       <h2 class="h2 text-center">
         {{ msg }}
@@ -16,13 +16,13 @@
       <button class="btn btn-outline-primary btn-lg" @click="stopTimer" v-else>STOP</button>
       <button class="btn btn-outline-primary btn-lg" @click="pushTime" :disabled="!isRunning">LAP</button>
       <button class="btn btn-outline-primary btn-lg" @click="clearAll">CLEAR</button>
-      <table class="table table-striped table-bordered">
+      <table class="table table-striped table-bordered menu-table" align=center>
         <tr style="table-tr" v-for="(mn, index) in menu" v-bind:key="index">
-          <th class="th-pad1">
+          <th class="th-pad1 menu-name">
             <input class="form-control menu-name" type="text" placeholder='Name' v-model=mn.name></th>
-          <th class="th-pad1">
+          <th class="th-pad1 menu-sec">
             <input class="form-control menu-sec" type="number" placeholder='integer seconds' v-model=mn.sec></th>
-          <th class="th-pad1">
+          <th class="th-pad1 menu-batu">
             <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">✗</button></th>
         </tr>
       </table>
@@ -50,8 +50,10 @@
 </template>
 
 <style>
-.menu-name {width: 20em; }
-.menu-sec {width: 6em; }
+.menu-table {width: 24em; }
+.menu-name {width: 16em; }
+.menu-sec {width: 4em; }
+.menu-batu {width: 4em; }
 .btn-border-black {
   border-color: black
 }
