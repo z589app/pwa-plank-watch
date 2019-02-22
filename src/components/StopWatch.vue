@@ -2,7 +2,7 @@
 <div id="app" class="ui text container">
   <div class="center aligned row">
     <div class="column">
-      <h2>
+      <h2 class="h2 text-center">
         {{ msg }}
         <br>
         {{ duration }}
@@ -12,22 +12,28 @@
         {{ minutes | zeroPad }} :
         {{ seconds | zeroPad }} :
         {{ milliSeconds | zeroPad(3) }}</p>
-      <button class="btn-square" @click="startTimer" v-if="!isRunning">START</button>
-      <button class="btn-square" @click="stopTimer" v-else>STOP</button>
-      <button class="btn-square" @click="pushTime" :disabled="!isRunning">LAP</button>
-      <button class="btn-square" @click="clearAll">CLEAR</button>
-      <table align=center>
-        <tr class="mn" v-for="(mn, index) in menu" v-bind:key="index">
-          <th><input type="text" class="menu-name" placeholder='Name' v-model=mn.name></th>
-          <th><input type="number" class="menu-sec" placeholder='integer seconds' v-model=mn.sec></th>
-          <th><button class="btn-square" @click="removeItem(index)">X</button></th>
+      <button class="btn btn-outline-primary btn-lg" @click="startTimer" v-if="!isRunning">START</button>
+      <button class="btn btn-outline-primary btn-lg" @click="stopTimer" v-else>STOP</button>
+      <button class="btn btn-outline-primary btn-lg" @click="pushTime" :disabled="!isRunning">LAP</button>
+      <button class="btn btn-outline-primary btn-lg" @click="clearAll">CLEAR</button>
+      <table class="table table-striped table-bordered">
+        <tr style="table-tr" v-for="(mn, index) in menu" v-bind:key="index">
+          <th class="th-pad1">
+            <input class="form-control menu-name" type="text" placeholder='Name' v-model=mn.name></th>
+          <th class="th-pad1">
+            <input class="form-control menu-sec" type="number" placeholder='integer seconds' v-model=mn.sec></th>
+          <th class="th-pad1">
+            <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">✗</button></th>
         </tr>
       </table>
-      <button class="btn-square" @click="addItem">+</button>
-      <br>
-      <button class="btn-square" @click="saveMenu">SAVE</button>
-      <button class="btn-square" @click="loadMenu">LOAD</button>
-      <button class="btn-square" @click="loadDefaultMenu">DEFAULT</button>
+      <button type="button" class="btn btn-outline-primary btn-sm"
+        @click="addItem" data-toggle="tooltip" data-placement="top" title="Add Item">+</button>
+      <button type="button" class="btn btn-outline-primary btn-sm"
+        @click="saveMenu" data-toggle="tooltip" data-placement="top" title="Save items">&#x1F4BE;</button>
+      <button type="button" class="btn btn-outline-primary btn-sm"
+        @click="loadMenu" data-toggle="tooltip" data-placement="top" title="Load items">&#x1F4C2;</button>
+      <button type="button" class="btn btn-outline-primary btn-sm"
+        @click="loadDefaultMenu" data-toggle="tooltip" data-placement="top" title="Load default">&#x1F4C4;</button>
       <ul v-if="times.length">
         <li v-for="itm in times" v-bind:key="itm">
           {{ itm.hours  }} :
@@ -45,27 +51,20 @@
 
 <style>
 .menu-name {width: 20em; }
-.menu-sec {width: 8em; }
-.btn-square {
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #668ad8;/*ボタン色*/
-  color: #FFF;
-  border-bottom: solid 4px #627295;
-  border-radius: 3px;
+.menu-sec {width: 6em; }
+.btn-border-black {
+  border-color: black
 }
-.btn-square:active {
-  /*ボタンを押したとき*/
-  -webkit-transform: translateY(4px);
-  transform: translateY(4px);/*下に動く*/
-  border-bottom: none;/*線を消す*/
+th.th-pad1 {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 </style>
 
 <script>
 import * as localforage from 'localforage'
-
 export default {
   name: 'StopWatch',
   data () {
@@ -124,7 +123,7 @@ export default {
       this.times = []
       this.stopTimer()
       this.animateFrame = 0
-      this.durationTime = 0
+      // this.durationTime = 0
     },
     addItem: function () {
       var itemName = 'N' + this.menu.length.toString()
