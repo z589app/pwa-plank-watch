@@ -50,10 +50,10 @@
 </template>
 
 <style>
-.menu-table {width: 24em; }
-.menu-name {width: 16em; }
+.menu-table {width: 20em; }
+.menu-name {width: 14em; }
 .menu-sec {width: 4em; }
-.menu-batu {width: 4em; }
+.menu-batu {width: 2em; }
 .btn-border-black {
   border-color: black
 }
