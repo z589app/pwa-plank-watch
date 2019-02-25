@@ -23,15 +23,15 @@
           <th class="th-pad1 menu-sec">
             <input class="form-control menu-sec" type="number" placeholder='integer seconds' v-model=mn.sec></th>
           <th class="th-pad1 menu-batu">
-            <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">✗</button></th>
+            <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">&#128941;</button></th>
         </tr>
       </table>
       <button type="button" class="btn btn-outline-primary btn-sm"
-        @click="addItem" data-toggle="tooltip" data-placement="top" title="Add Item">+</button>
+        @click="addItem" data-toggle="tooltip" data-placement="top" title="Add Item">&#128934;</button>
       <button type="button" class="btn btn-outline-primary btn-sm"
-        @click="saveMenu" data-toggle="tooltip" data-placement="top" title="Save items">&#x1F4BE;</button>
+        @click="saveMenu" data-toggle="tooltip" data-placement="top" title="Save items">&#128427;</button>
       <button type="button" class="btn btn-outline-primary btn-sm"
-        @click="loadMenu" data-toggle="tooltip" data-placement="top" title="Load items">&#x1F4C2;</button>
+        @click="loadMenu" data-toggle="tooltip" data-placement="top" title="Load items">&#128449;</button>
       <button type="button" class="btn btn-outline-primary btn-sm"
         @click="loadDefaultMenu" data-toggle="tooltip" data-placement="top" title="Load default">&#x1F4C4;</button>
       <ul v-if="times.length">
