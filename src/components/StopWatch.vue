@@ -19,11 +19,14 @@
       <table class="table table-striped table-bordered menu-table" align=center>
         <tr style="table-tr" v-for="(mn, index) in menu" v-bind:key="index">
           <th class="th-pad1 menu-name">
-            <input class="form-control menu-name" type="text" placeholder='Name' v-model=mn.name></th>
+            <input class="form-control menu-name" type="text" placeholder='Name' v-model=mn.name>
+          </th>
           <th class="th-pad1 menu-sec">
-            <input class="form-control menu-sec" type="number" placeholder='integer seconds' v-model=mn.sec></th>
+            <input class="form-control menu-sec" type="number" placeholder='integer seconds' v-model=mn.sec>
+          </th>
           <th class="th-pad1 menu-batu">
-            <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">&#128941;</button></th>
+            <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">&#128941;</button>
+          </th>
         </tr>
       </table>
       <button type="button" class="btn btn-outline-primary btn-sm"
@@ -62,6 +65,12 @@ th.th-pad1 {
   padding-bottom: 1px;
   padding-left: 1px;
   padding-right: 1px;
+}
+.v-enter-active, .v-leave-active {
+  transition: opacity .5s
+}
+.v-enter, .v-leave-to {
+  opacity: 0
 }
 </style>
 
