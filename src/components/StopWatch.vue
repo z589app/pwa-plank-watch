@@ -144,16 +144,25 @@ export default {
       this.menu.splice(idx, 1)
     },
     loadDefaultMenu: function () {
-      this.menu = [
-        {name: 'フルプランク', sec: 60},
-        {name: 'エルボープランク', sec: 30},
-        {name: '脚上げプランク右', sec: 30},
-        {name: '脚上げプランク左', sec: 30},
-        {name: 'レフトサイドプランク', sec: 30},
-        {name: 'ライトサイドプランク', sec: 30},
-        {name: 'フルプランク', sec: 30},
-        {name: 'エルボープランク', sec: 60}
-      ]
+      if (this.$route.query && this.$route.query.name) {
+        var names = this.$route.query.name.split(',')
+        var secs = this.$route.query.sec.split(',')
+        this.menu = []
+        for (var i = 0; i < names.length; i++) {
+          this.menu.push({name: names[i], sec: parseInt(secs[i])})
+        }
+      } else {
+        this.menu = [
+          {name: 'フルプランク', sec: 60},
+          {name: 'エルボープランク', sec: 30},
+          {name: '脚上げプランク右', sec: 30},
+          {name: '脚上げプランク左', sec: 30},
+          {name: 'レフトサイドプランク', sec: 30},
+          {name: 'ライトサイドプランク', sec: 30},
+          {name: 'フルプランク', sec: 30},
+          {name: 'エルボープランク', sec: 60}
+        ]
+      }
     },
     saveMenu: function () {
       const myLF = localforage.createInstance({
