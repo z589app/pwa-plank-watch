@@ -33,7 +33,7 @@
             <input class="form-control menu-sec" type="number" placeholder='integer seconds' v-model=mn.sec>
           </th>
           <th class="th-pad1 menu-batu">
-            <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">&#128941;</button>
+            <button class="btn btn-outline-primary btn-sm" @click="removeItem(index)">x</button>
           </th>
         </tr>
       </table>
