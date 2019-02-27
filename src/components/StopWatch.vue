@@ -144,6 +144,7 @@ export default {
       this.menu.splice(idx, 1)
     },
     loadDefaultMenu: function () {
+      // Query Test
       if (this.$route.query && this.$route.query.name) {
         var names = this.$route.query.name.split(',')
         var secs = this.$route.query.sec.split(',')
@@ -178,6 +179,18 @@ export default {
         .catch((error) => {
           console.log(error) // pass
         })
+
+      // Query Test
+      var names = []
+      var secs = []
+      for (var i = 0; i < this.menu.length; i++) {
+        names.push(this.menu[i].name)
+        secs.push(this.menu[i].sec)
+      }
+      var queryNames = names.join(',')
+      var querySecs = secs.join(',')
+      console.log(secs)
+      this.$router.push({query: { names: queryNames, secs: querySecs }})
     },
     loadMenu: function () {
       const myLF = localforage.createInstance({
