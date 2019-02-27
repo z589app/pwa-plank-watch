@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <span>Vue.js PWA</span>
+      <span> {{ $route.query.title || "PWA" }}</span>
     </header>
     <main>
       <router-view></router-view>

@@ -30,13 +30,13 @@
         </tr>
       </table>
       <button type="button" class="btn btn-outline-primary btn-sm"
-        @click="addItem" data-toggle="tooltip" data-placement="top" title="Add Item">&#128934;</button>
+        @click="addItem" data-toggle="tooltip" data-placement="top" title="Add Item">ADD</button>
       <button type="button" class="btn btn-outline-primary btn-sm"
-        @click="saveMenu" data-toggle="tooltip" data-placement="top" title="Save items">&#128427;</button>
+        @click="saveMenu" data-toggle="tooltip" data-placement="top" title="Save items">SAVE</button>
       <button type="button" class="btn btn-outline-primary btn-sm"
-        @click="loadMenu" data-toggle="tooltip" data-placement="top" title="Load items">&#128449;</button>
+        @click="loadStorageMenu" data-toggle="tooltip" data-placement="top" title="Load items">LOAD</button>
       <button type="button" class="btn btn-outline-primary btn-sm"
-        @click="loadDefaultMenu" data-toggle="tooltip" data-placement="top" title="Load default">&#x1F4C4;</button>
+        @click="loadDefaultMenu" data-toggle="tooltip" data-placement="top" title="Load default">DEFAULT</button>
       <ul v-if="times.length">
         <li v-for="itm in times" v-bind:key="itm">
           {{ itm.hours  }} :
@@ -92,9 +92,9 @@ export default {
   },
   created: function () {
     this.loadMenu()
+    document.title = this.$route.query.title || 'PWA'
   },
   methods: {
-    // 現在時刻から引数に渡した数値を startTime に代入
     setSubtractStartTime: function (time) {
       var t = typeof time !== 'undefined' ? time : 0
       this.startTime = Math.floor(performance.now() - t)
@@ -143,29 +143,34 @@ export default {
     removeItem: function (idx) {
       this.menu.splice(idx, 1)
     },
-    loadDefaultMenu: function () {
-      // Query Test
-      if (this.$route.query && this.$route.query.name) {
-        var names = this.$route.query.name.split(',')
-        var secs = this.$route.query.sec.split(',')
+    loadQueryMenu: function () {
+      if (this.$route.query && this.$route.query.names) {
+        var names = this.$route.query.names.split(',')
+        var secs = []
+        if (this.$route.query.secs) {
+          secs = this.$route.query.secs.split(',')
+        }
         this.menu = []
         for (var i = 0; i < names.length; i++) {
-          this.menu.push({name: names[i], sec: parseInt(secs[i])})
+          this.menu.push({name: names[i], sec: parseInt(secs[i] || 10)})
         }
-      } else {
-        this.menu = [
-          {name: 'フルプランク', sec: 60},
-          {name: 'エルボープランク', sec: 30},
-          {name: '脚上げプランク右', sec: 30},
-          {name: '脚上げプランク左', sec: 30},
-          {name: 'レフトサイドプランク', sec: 30},
-          {name: 'ライトサイドプランク', sec: 30},
-          {name: 'フルプランク', sec: 30},
-          {name: 'エルボープランク', sec: 60}
-        ]
+        return true
       }
+      return false
     },
-    saveMenu: function () {
+    loadDefaultMenu: function () {
+      this.menu = [
+        {name: 'フルプランク', sec: 60},
+        {name: 'エルボープランク', sec: 30},
+        {name: '脚上げプランク右', sec: 30},
+        {name: '脚上げプランク左', sec: 30},
+        {name: 'レフトサイドプランク', sec: 30},
+        {name: 'ライトサイドプランク', sec: 30},
+        {name: 'フルプランク', sec: 30},
+        {name: 'エルボープランク', sec: 60}
+      ]
+    },
+    saveStorageMenu: function () {
       const myLF = localforage.createInstance({
         drive: localforage.LOCALSTORAGE,
         name: 'MyLocal',
@@ -179,8 +184,9 @@ export default {
         .catch((error) => {
           console.log(error) // pass
         })
-
-      // Query Test
+    },
+    saveQueryMenu: function () {
+      // Query
       var names = []
       var secs = []
       for (var i = 0; i < this.menu.length; i++) {
@@ -192,7 +198,16 @@ export default {
       console.log(secs)
       this.$router.push({query: { names: queryNames, secs: querySecs }})
     },
+    saveMenu: function () {
+      this.saveStorageMenu()
+      this.saveQueryMenu()
+    },
     loadMenu: function () {
+      this.loadQueryMenu() ||
+      this.loadStorageMenu() ||
+      this.loadDefaultMenu()
+    },
+    loadStorageMenu: function () {
       const myLF = localforage.createInstance({
         drive: localforage.LOCALSTORAGE,
         name: 'MyLocal',
@@ -203,19 +218,19 @@ export default {
         .then((value) => {
           if (value) {
             this.menu = value
-          } else {
-            this.loadDefaultMenu()
+            return true
           }
         })
         .catch((error) => {
           console.log(error)
         })
+      return false
     }
   },
   computed: {
     msg: function () {
       var tSec = Math.ceil(this.diffTime / 1000)
-      var message = 'おつかれ～'
+      var message = this.$route.query.end_message || 'おつかれ～'
       var menu = this.menu
       for (var i = 0; i < menu.length; i++) {
         var item = menu[i]
@@ -232,26 +247,20 @@ export default {
     duration: function () {
       return this.durationTime
     },
-    // 時間を計算
     hours: function () {
       return Math.floor(this.diffTime / 1000 / 60 / 60)
     },
-    // 分数を計算 (60分になったら0分に戻る)
     minutes: function () {
       return Math.floor(this.diffTime / 1000 / 60) % 60
     },
-    // 秒数を計算 (60秒になったら0秒に戻る)
     seconds: function () {
       return Math.floor(this.diffTime / 1000) % 60
     },
-    // ミリ数を計算 (1000ミリ秒になったら0ミリ秒に戻る)
     milliSeconds: function () {
       return Math.floor(this.diffTime % 1000)
     }
   },
   filters: {
-    // ゼロ埋めフィルタ 引数に桁数を入力する
-    // ※ String.prototype.padStart() は IEじゃ使えない
     zeroPad: function (value, num) {
       var n = typeof num !== 'undefined' ? num : 2
       return value.toString().padStart(n, '0')
