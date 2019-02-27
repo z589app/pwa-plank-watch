@@ -3,10 +3,18 @@
   <div class="center aligned">
     <div class="column">
       <h2 class="h2 text-center">
-        {{ msg }}
-        <br>
-        {{ duration }}
+        <p> {{ msg }} </p>
       </h2>
+      <p align="center">
+      <radial-progress-bar
+        :diameter="200"
+        :strokeWidth=15
+        :animateSpeed=1000
+        :completed-steps="completedSteps"
+        :total-steps="totalSteps">
+      <h2 class="h2 text-cente"> {{ duration }} </h2>
+      </radial-progress-bar>
+      </p>
       <p>
         {{ hours }} :
         {{ minutes | zeroPad }} :
@@ -76,8 +84,12 @@ th.th-pad1 {
 
 <script>
 import * as localforage from 'localforage'
+import RadialProgressBar from 'vue-radial-progress'
 export default {
   name: 'StopWatch',
+  components: {
+    RadialProgressBar
+  },
   data () {
     return {
       times: [],
@@ -87,6 +99,8 @@ export default {
       startTime: 0,
       isRunning: false,
       durationTime: 0,
+      completedSteps: 10,
+      totalSteps: 100,
       menu: []
     }
   },
@@ -237,6 +251,8 @@ export default {
         if (tSec <= item.sec) {
           message = item.name
           this.durationTime = item.sec - tSec
+          this.completedSteps = item.sec - tSec
+          this.totalSteps = item.sec
           break
         } else {
           tSec -= item.sec
@@ -258,6 +274,9 @@ export default {
     },
     milliSeconds: function () {
       return Math.floor(this.diffTime % 1000)
+    },
+    prog: function () {
+      return 10
     }
   },
   filters: {
