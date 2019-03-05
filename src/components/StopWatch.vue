@@ -137,7 +137,7 @@ export default {
       } else {
         this.startTimer()
       }
-    }
+    },
     // 計測中の時間を配列に追加
     pushTime: function () {
       this.times.push({
