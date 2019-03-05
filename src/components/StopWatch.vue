@@ -5,7 +5,7 @@
       <h2 class="h2 text-center">
         <p> {{ msg }} </p>
       </h2>
-      <p align="center">
+      <p align="center" @click="toggleTimer">
       <radial-progress-bar
         :diameter="200"
         :strokeWidth=15
@@ -131,6 +131,13 @@ export default {
       this.isRunning = false
       cancelAnimationFrame(this.animateFrame)
     },
+    toggleTimer: function () {
+      if (this.isRunning) {
+        this.stopTimer()
+      } else {
+        this.startTimer()
+      }
+    }
     // 計測中の時間を配列に追加
     pushTime: function () {
       this.times.push({
