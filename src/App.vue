@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <span> {{ $route.query.title || "PWA" }}</span>
+      <span> {{ $route.params.title || "PWA" }}</span>
     </header>
     <main>
       <router-view></router-view>

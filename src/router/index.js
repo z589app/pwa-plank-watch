@@ -5,9 +5,10 @@ import StopWatch from '@/components/StopWatch'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/:title(.*)',
       name: 'StopWatch',
       component: StopWatch
     }

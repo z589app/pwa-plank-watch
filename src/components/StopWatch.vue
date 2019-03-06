@@ -106,10 +106,6 @@ export default {
   },
   created: function () {
     this.loadMenu()
-    document.title = 'PWA'
-    if (this.$route.query && this.$route.query.title) {
-      document.title = this.$route.query.title
-    }
   },
   methods: {
     setSubtractStartTime: function (time) {
