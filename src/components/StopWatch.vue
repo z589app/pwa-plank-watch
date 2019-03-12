@@ -85,6 +85,10 @@ th.th-pad1 {
 <script>
 import * as localforage from 'localforage'
 import RadialProgressBar from 'vue-radial-progress'
+
+import * as NoSleep from 'nosleep.js'
+var noSleep = new NoSleep()
+
 export default {
   name: 'StopWatch',
   components: {
@@ -116,7 +120,8 @@ export default {
     startTimer: function () {
       // loop()内で this の値が変更されるので退避
       var vm = this
-      vm.setSubtractStartTime(vm.diffTime);
+      vm.setSubtractStartTime(vm.diffTime)
+      noSleep.enable()
       // ループ処理
       (function loop () {
         vm.nowTime = Math.floor(performance.now())
@@ -129,6 +134,7 @@ export default {
     stopTimer: function () {
       this.isRunning = false
       cancelAnimationFrame(this.animateFrame)
+      noSleep.disabled()
     },
     toggleTimer: function () {
       if (this.isRunning) {
@@ -154,6 +160,7 @@ export default {
       this.times = []
       this.stopTimer()
       this.animateFrame = 0
+      noSleep.disabled()
       // this.durationTime = 0
     },
     addItem: function () {
