@@ -106,11 +106,13 @@ export default {
       durationTime: 0,
       completedSteps: 10,
       totalSteps: 100,
-      menu: []
+      menu: [],
+      noSleep: null
     }
   },
   created: function () {
     this.loadMenu()
+    this.noSleep = new NoSleep()
   },
   methods: {
     setSubtractStartTime: function (time) {
@@ -135,7 +137,7 @@ export default {
     stopTimer: function () {
       this.isRunning = false
       cancelAnimationFrame(this.animateFrame)
-      this.noSleep.disabled()
+      this.noSleep.disable()
     },
     toggleTimer: function () {
       if (this.isRunning) {
@@ -161,7 +163,7 @@ export default {
       this.times = []
       this.stopTimer()
       this.animateFrame = 0
-      this.noSleep.disabled()
+      this.noSleep.disable()
       // this.durationTime = 0
     },
     addItem: function () {
@@ -292,8 +294,7 @@ export default {
     },
     prog: function () {
       return 10
-    },
-    noSleep: new NoSleep()
+    }
   },
   filters: {
     zeroPad: function (value, num) {
