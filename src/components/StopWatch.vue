@@ -3,9 +3,9 @@
   <div class="center aligned">
     <div class="column">
       <h2 class="h2 text-center">
-        <p> {{ msg }} </p>
+        <p class="class_msg"> {{ msg }} </p>
       </h2>
-      <p align="center">
+      <p align="center" @click="toggleTimer">
       <radial-progress-bar
         :diameter="200"
         :strokeWidth=15
@@ -85,6 +85,11 @@ th.th-pad1 {
 <script>
 import * as localforage from 'localforage'
 import RadialProgressBar from 'vue-radial-progress'
+
+import NoSleep from 'nosleep.js'
+// import * as NoSleep from 'nosleep.js'
+// var noSleep = new NoSleep()
+
 export default {
   name: 'StopWatch',
   components: {
@@ -101,23 +106,25 @@ export default {
       durationTime: 0,
       completedSteps: 10,
       totalSteps: 100,
-      menu: []
+      menu: [],
+      noSleep: null
     }
   },
   created: function () {
     this.loadMenu()
-    document.title = this.$route.query.title || 'PWA'
+    this.noSleep = new NoSleep()
   },
   methods: {
     setSubtractStartTime: function (time) {
-      var t = typeof time !== 'undefined' ? time : 0
+      var t = time || 0
       this.startTime = Math.floor(performance.now() - t)
     },
     // タイマーをスタートさせる
     startTimer: function () {
       // loop()内で this の値が変更されるので退避
       var vm = this
-      vm.setSubtractStartTime(vm.diffTime);
+      vm.setSubtractStartTime(vm.diffTime)
+      this.noSleep.enable();
       // ループ処理
       (function loop () {
         vm.nowTime = Math.floor(performance.now())
@@ -130,6 +137,14 @@ export default {
     stopTimer: function () {
       this.isRunning = false
       cancelAnimationFrame(this.animateFrame)
+      this.noSleep.disable()
+    },
+    toggleTimer: function () {
+      if (this.isRunning) {
+        this.stopTimer()
+      } else {
+        this.startTimer()
+      }
     },
     // 計測中の時間を配列に追加
     pushTime: function () {
@@ -148,6 +163,7 @@ export default {
       this.times = []
       this.stopTimer()
       this.animateFrame = 0
+      this.noSleep.disable()
       // this.durationTime = 0
     },
     addItem: function () {
@@ -165,9 +181,9 @@ export default {
           secs = this.$route.query.secs.split(',')
         }
         this.menu = []
-        for (var i = 0; i < names.length; i++) {
-          this.menu.push({name: names[i], sec: parseInt(secs[i] || 10)})
-        }
+        names.forEach(function (v, i) {
+          this.menu.push({name: v, sec: parseInt(secs[i] || 10)})
+        }, this)
         return true
       }
       return false
@@ -203,13 +219,12 @@ export default {
       // Query
       var names = []
       var secs = []
-      for (var i = 0; i < this.menu.length; i++) {
-        names.push(this.menu[i].name)
-        secs.push(this.menu[i].sec)
-      }
+      this.menu.forEach(function (v) {
+        names.push(v.name)
+        secs.push(v.sec)
+      })
       var queryNames = names.join(',')
       var querySecs = secs.join(',')
-      console.log(secs)
       this.$router.push({query: { names: queryNames, secs: querySecs }})
     },
     saveMenu: function () {
@@ -244,10 +259,12 @@ export default {
   computed: {
     msg: function () {
       var tSec = Math.ceil(this.diffTime / 1000)
-      var message = this.$route.query.end_message || 'おつかれ～'
-      var menu = this.menu
-      for (var i = 0; i < menu.length; i++) {
-        var item = menu[i]
+      var message = 'おつかれ～'
+      if (this.$route.query && this.$route.query.end_message) {
+        message = this.$route.query.end_message
+      }
+      for (var i = 0; i < this.menu.length; i++) {
+        var item = this.menu[i]
         if (tSec <= item.sec) {
           message = item.name
           this.durationTime = item.sec - tSec
@@ -281,7 +298,7 @@ export default {
   },
   filters: {
     zeroPad: function (value, num) {
-      var n = typeof num !== 'undefined' ? num : 2
+      var n = num || 2
       return value.toString().padStart(n, '0')
     }
   }
