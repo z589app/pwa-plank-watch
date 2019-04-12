@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <span> {{ $route.params.title || "PWA" }}</span>
+      <span> {{ $route.params.title.replace('pwa-plank-watch/', '') || "PWA" }}</span>
     </header>
     <main>
       <router-view></router-view>
