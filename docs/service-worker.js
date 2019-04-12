@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/pwa-plank-watch/precache-manifest.abb95c6a8dea3fb6791629b9ac28e767.js"
+  "/pwa-plank-watch/precache-manifest.e0ceb6fda3ef7cc6218299995816d620.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "pwa-plank-watch"});
@@ -216,6 +216,10 @@ self.__precacheManifest = [
     "revision": "a9577437991aa50f67ad0b7f47e13aaf"
   },
   {
+    "url": "precache-manifest.abb95c6a8dea3fb6791629b9ac28e767.js",
+    "revision": "abb95c6a8dea3fb6791629b9ac28e767"
+  },
+  {
     "url": "precache-manifest.acea7a0def7573dc796362588266a6cc.js",
     "revision": "acea7a0def7573dc796362588266a6cc"
   },
@@ -293,7 +297,7 @@ self.__precacheManifest = [
   },
   {
     "url": "service-worker.js",
-    "revision": "6a9db34fb7453f097e628ab7eee120f7"
+    "revision": "d1a7532258a11c25556c625199a11726"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();

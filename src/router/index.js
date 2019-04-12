@@ -11,6 +11,11 @@ export default new Router({
       path: '/:title(.*)',
       name: 'StopWatch',
       component: StopWatch
+    },
+    {
+      path: '/pwa-plank-watch/:title(.*)',
+      name: 'StopWatch',
+      component: StopWatch
     }
   ]
 })
