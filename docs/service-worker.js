@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/pwa-plank-watch/precache-manifest.0b58ad4cfb8c0873de6f88f24bb29bfa.js"
+  "/pwa-plank-watch/precache-manifest.ac6c517a2a04d8d57bd92e21fe203bfb.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "pwa-plank-watch"});
@@ -29,15 +29,51 @@ workbox.clientsClaim();
 self.__precacheManifest = [
   {
     "url": "index.html",
-    "revision": "4c7c9eb2ed5e204d4b102633a1fffd6f"
+    "revision": "0ac8d3806a1dcec600116128f4dd65fa"
   },
   {
-    "url": "precache-manifest.a6f7b6675b9b983ccfde286e97f3c5af.js",
-    "revision": "a6f7b6675b9b983ccfde286e97f3c5af"
+    "url": "precache-manifest.0b58ad4cfb8c0873de6f88f24bb29bfa.js",
+    "revision": "0b58ad4cfb8c0873de6f88f24bb29bfa"
+  },
+  {
+    "url": "precache-manifest.2b8a642bbe5406d335a35e67fa620c3f.js",
+    "revision": "2b8a642bbe5406d335a35e67fa620c3f"
+  },
+  {
+    "url": "precache-manifest.63e4a72234c5db647eb056ee24564ef2.js",
+    "revision": "63e4a72234c5db647eb056ee24564ef2"
+  },
+  {
+    "url": "precache-manifest.7efd988642290751f7fb669c850ce06d.js",
+    "revision": "7efd988642290751f7fb669c850ce06d"
+  },
+  {
+    "url": "precache-manifest.8fc1e26981d1c0b0a32b97ad5705a316.js",
+    "revision": "8fc1e26981d1c0b0a32b97ad5705a316"
+  },
+  {
+    "url": "precache-manifest.a6a55fa578f903ce63bf66a20eb9ac0b.js",
+    "revision": "a6a55fa578f903ce63bf66a20eb9ac0b"
+  },
+  {
+    "url": "precache-manifest.c3b369dc004a140c20997ace0f9247a7.js",
+    "revision": "c3b369dc004a140c20997ace0f9247a7"
+  },
+  {
+    "url": "precache-manifest.cbeb23334a46bf40a0fa14dcbfbe2fc1.js",
+    "revision": "cbeb23334a46bf40a0fa14dcbfbe2fc1"
+  },
+  {
+    "url": "precache-manifest.eb5e21c45fc03b89365478b9d37f2ac5.js",
+    "revision": "eb5e21c45fc03b89365478b9d37f2ac5"
+  },
+  {
+    "url": "precache-manifest.f509dde3e736160c92bc42ec5a9738a7.js",
+    "revision": "f509dde3e736160c92bc42ec5a9738a7"
   },
   {
     "url": "service-worker.js",
-    "revision": "8e7640bad25115c199544871079b175a"
+    "revision": "7a186f04120fffa87a26ae6a7318aa8a"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
